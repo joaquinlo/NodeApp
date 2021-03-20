@@ -1,0 +1,29 @@
+<%- include("template/header", {tabname: 'users'}) %>
+
+  <a href="/users/new"> crear nuevo usuario </a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Edit</th>
+      </tr>
+    </thead>
+
+    <tbody> 
+      <% if (userArray.length > 0) { %>
+          <% userArray.forEach(user => { %>
+              <tr>
+                  <th scope="row"><%= user._id %></th>
+                  <td><%= user.nombre %> </td>
+                  <td><%= user.apellido %></td>
+                  <td><a href="/users/<%= user._id %>">[E]</a></td>
+                </tr>
+          <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<%- include("template/header", {tabname: "new"})%>
+<body>
+    <form action="/users" method="POST">
+        <fieldset>
+          <legend> <%= title %> </legend>
+          <label for="nombre">Nombre:</label><br>
+          <input type="text" id="nombre" name="nombre" value=""><br>
+          <label for="apellido">Apellido:</label><br>
+          <input type="text" id="apellido" name="apellido" value=""><br><br>
+          <input type="submit" value="Submit">
+        </fieldset>
+      </form>
+</body>
+</html>

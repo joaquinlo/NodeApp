@@ -1,0 +1,72 @@
+<%- include("template/header", {tabname: "select"})%>
+<body>
+    <% if (error) { %>
+        <p> <%= mensaje %> </p>
+        <a href="/users">volver a ususarios</a>
+    <% } %>
+
+    <% if (!error) { %>
+
+        <form id="edForm" data-id="<%= user._id %>">
+            <fieldset>
+              <legend> Editar </legend>
+              <label for="nombre">Nombre:</label><br>
+              <input type="text" id="nombre" name="nombre" value="<%= user.nombre %>"><br>
+              <label for="apellido">Apellido:</label><br>
+              <input type="text" id="apellido" name="apellido" value="<%= user.apellido %>"><br><br>
+              <input type="submit" value="[E]">
+            </fieldset>
+          </form>
+        <button data-id="<%= user._id %>" id="delButton" href="#">[D]</button>
+    <% } %>
+</body>
+
+<script>
+    const delButton = document.querySelector('#delButton')
+
+    delButton.addEventListener('click', async () => {
+        const id = delButton.dataset.id
+        try {
+            const data = await fetch(`/users/${id}`, {method: 'delete'})
+            const res = await data.json()
+            if (res.status) {
+                window.location.href = '/users'
+            } else {
+                console.log(res)
+            }
+        } catch (error) {
+            console.log('error', error)
+        }
+    })
+
+    const edForm = document.querySelector('#edForm')
+    edForm.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const nombre = document.querySelector('#nombre').value
+        const apellido = document.querySelector('#apellido').value
+        const id = edForm.dataset.id
+
+        try {
+            const data = await fetch(`/users/${id}`, {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nombre,
+                    apellido
+                })
+            })
+            const res = await data.json()
+            if (res.status) {
+                window.location.href = '/users'
+            } else {
+                console.log(res)
+            }
+        } catch (error) {
+            
+        }
+    })
+</script>
+
+</html>
