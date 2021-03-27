@@ -1,20 +1,17 @@
 const express = require('express');
-const bodyParser = require('body-parser')
 const app = express();
+const mongoose = require('mongoose');
 
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }))
 // parse application/json
 app.use(express.json())
 
-const port = '3000';
+require('dotenv').config()
+const port = process.env.PORT;
 
-const mongoose = require('mongoose');
-
-const dbname = 'project-database';
-const password = 'dMJWkZEenT3tmjjH';
-const username = 'mongodb'
-const uri = `mongodb+srv://${username}:${password}@cluster0.hkrmp.mongodb.net/${dbname}?retryWrites=true&w=majority`;
+//credenciales en el .env
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.hkrmp.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => console.log('base de datos conectada'))
